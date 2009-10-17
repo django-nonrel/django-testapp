@@ -1,0 +1,16 @@
+syntax: glob
+.project
+.pydevproject
+.settings
+*~
+*.orig
+*.pyc
+*.pyo
+*.swp
+*.tmp
+_generated_media
+.dynamic_media
+desktop.ini
+settings_overrides.py
+nbproject
+django
