@@ -13,11 +13,9 @@ if current_dir not in sys.path:
 for k in [k for k in sys.modules if k.startswith('django')]:
     del sys.modules[k]
 
-import aecmd
+from . import aecmd
 aecmd.setup_project()
-
-from appenginepatcher.patch import patch_all, setup_logging
-patch_all()
+aecmd.setup_logging()
 
 import django.core.handlers.wsgi
 from google.appengine.ext.webapp import util
@@ -31,7 +29,7 @@ def real_main():
     except:
         path_backup = sys.path[:]
     os.environ.update(aecmd.env_ext)
-    setup_logging()
+    aecmd.setup_logging()
 
     # Create a Django application for WSGI.
     application = django.core.handlers.wsgi.WSGIHandler()

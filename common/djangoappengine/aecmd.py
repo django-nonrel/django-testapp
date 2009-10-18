@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, sys
+import logging, os, sys
 
 COMMON_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_DIR = os.path.dirname(COMMON_DIR)
@@ -13,7 +13,7 @@ def setup_env():
     # Try to import the appengine code from the system path.
     try:
         from google.appengine.api import apiproxy_stub_map
-    except ImportError, e:
+    except ImportError:
         for k in [k for k in sys.modules if k.startswith('google')]:
             del sys.modules[k]
 
@@ -63,12 +63,17 @@ def setup_env():
     sys.path = [os.path.abspath(os.path.dirname(__file__))] + sys.path
 
     setup_project()
+    setup_logging()
 
-    from appenginepatcher.patch import patch_all
-    patch_all()
+def setup_logging():
+    from django.conf import settings
+    if settings.DEBUG:
+        logging.getLogger().setLevel(logging.DEBUG)
+    else:
+        logging.getLogger().setLevel(logging.INFO)
 
 def setup_project():
-    from appenginepatcher import on_production_server
+    from .utils import on_production_server
     if on_production_server:
         # This fixes a pwd import bug for os.path.expanduser()
         global env_ext
@@ -87,8 +92,8 @@ def setup_project():
         COMMON_DIR,
     ]
 
-    this_folder = os.path.abspath(os.path.dirname(__file__))
-    EXTRA_PATHS.append(os.path.join(this_folder, 'appenginepatcher', 'lib'))
+    EXTRA_PATHS.append(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+        'lib'))
 
     # We support zipped packages in the common and project folders.
     # The files must be in the packages folder.

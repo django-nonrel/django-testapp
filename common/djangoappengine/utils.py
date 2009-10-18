@@ -1,5 +1,5 @@
 from google.appengine.api import apiproxy_stub_map
-import os, sys
+import os
 
 have_appserver = bool(apiproxy_stub_map.apiproxy.GetStub('datastore_v3'))
 
