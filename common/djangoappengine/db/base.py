@@ -76,6 +76,21 @@ class DatabaseOperations(BaseDatabaseOperations):
     def quote_name(self, name):
         return name
 
+    def value_to_db_date(self, value):
+        # value is a date here, no need to check it
+        return value
+
+    def value_to_db_datetime(self, value):
+        # value is a datetime here, no need to check it
+        return value
+
+    def value_to_db_time(self, value):
+        # value is a time here, no need to check it
+        return value
+
+#    def value_to_db_decimal(self, value, max_digits, decimal_places):
+#        return 
+
 class DatabaseValidation(BaseDatabaseValidation):
     pass
 

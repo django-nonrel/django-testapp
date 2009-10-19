@@ -19,14 +19,14 @@ class Ptr(models.Model):
     page = models.ForeignKey(FlatPage, related_name='ptrs')
     title = models.CharField(_('Title'), max_length=200)
 
-class ModelFieldsWithoutOptions(models.Model):
+class FieldsWithoutOptionsModel(models.Model):
     datetime = models.DateTimeField()
     date = models.DateField()
     time = models.TimeField()
     floating_point = models.FloatField()
     boolean = models.BooleanField()
     null_boolean = models.NullBooleanField()
-    text = models.CharField()
+    text = models.CharField(max_length=3)
     email = models.EmailField()
 #    comma_seperated_integer = models.CommaSeparatedIntegerField()
     ip_address = models.IPAddressField()
@@ -44,13 +44,13 @@ class ModelFieldsWithoutOptions(models.Model):
 #    decimal = models.DecimalField() # can be None
 #    image = models.ImageField()
 
-class FieldsWithOptions(models.Model):
-    # any type of unique is not supported on GAE, instead you can use
-    # primary_key=True for some special cases. But be carefull: changing the
-    # primary_key of an entity will not result an updated entity, instead a new
-    # entity will be putted into the datastore. The old one will not be deleted
-    # and all references pointing to the old entitiy will not point to the new one
-    # either
+class FieldsWithOptionsModel(models.Model):
+    # any type of unique (unique_data, ...) is not supported on GAE, instead you
+    # can use primary_key=True for some special cases. But be carefull: changing
+    # the  primary_key of an entity will not result in an updated entity,
+    # instead a new entity will be putted into the datastore. The old one will
+    # not be deleted and all references pointing to the old entitiy will not
+    # point to the new one either
     datetime = models.DateTimeField(auto_now=True)
     date = models.DateField(auto_now_add=True)
     time = models.TimeField()
