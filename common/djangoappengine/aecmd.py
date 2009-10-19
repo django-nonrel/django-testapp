@@ -90,6 +90,7 @@ def setup_project():
     EXTRA_PATHS = [
         PROJECT_DIR,
         COMMON_DIR,
+        os.path.dirname(PROJECT_DIR),
     ]
 
     EXTRA_PATHS.append(os.path.join(os.path.abspath(os.path.dirname(__file__)),
