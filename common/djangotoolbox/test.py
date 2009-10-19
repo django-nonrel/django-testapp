@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from .testinspector import AssertInspectorResultProxy
 from .utils import object_list_to_table, equal_lists
 from django.test import TestCase as DjangoTestCase
 from google.appengine.ext import db
@@ -8,15 +7,16 @@ import unittest
 
 class TestCase(DjangoTestCase):
     def setUp(self):
-        if hasattr(self, 'setup'):
-            self.setup()
+        self.setup()
+
+    def tearDown(self):
+        self.teardown()
+
+    def setup(self):
+        pass
 
     def teardown(self):
-        if hasattr(self, 'teardown'):
-            self.teardown()
-
-    def run(self, result=None):
-        return super(TestCase, self).run(AssertInspectorResultProxy(result))
+        pass
 
 class ModelTestCase(TestCase):
     """
