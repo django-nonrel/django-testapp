@@ -18,11 +18,9 @@
 import os
 import sys
 
-from django.db.backends.appengine.base import destroy_datastore
-from django.db.backends.appengine.base import get_test_datastore_paths
-
+from .runserver import start_dev_appserver
 from django.core.management.base import BaseCommand
-from django.core.management.commands.runserver import start_dev_appserver
+from djangoappengine.db.base import destroy_datastore, get_test_datastore_paths
 
 
 class Command(BaseCommand):
