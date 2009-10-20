@@ -10,9 +10,6 @@ import datetime
 
 class FieldDBConvertionTest(TestCase):
     def testDBConvertion(self):
-#        # first check if putting entities work
-#        ModelFieldsWithoutOptions().save()
-#        self.assertEqual(ModelFieldsWithoutOptions().objects.count(), 1)
         actual_datetime = datetime.datetime.now()
         entity = FieldsWithoutOptionsModel(
             datetime=actual_datetime, date=actual_datetime.date(),
@@ -24,8 +21,8 @@ class FieldDBConvertionTest(TestCase):
             positiv_small_integer=4)
         entity.save()
 
-        # get the gae entity (not the model) and test if the fields have been
-        # converted right to the corresponding gae database types
+        # get the gae entity (not the model instance) and test if the fields
+        # have been converted right to the corresponding gae database types
         gae_entity = Get(Key.from_path(FieldsWithoutOptionsModel._meta.db_table,
             entity.pk))
 
@@ -42,8 +39,8 @@ class FieldDBConvertionTest(TestCase):
                     name)[0].column]) in (isinstance(gae_db_type, (list, tuple)) and \
                         gae_db_type or (gae_db_type, )))
 
-        # get the model and check if the fields convert back to the right field
-        # types
+        # get the model instance and check if the fields convert back to the
+        # right types
         entity = FieldsWithoutOptionsModel.objects.get()
         for name, expected_type in [('long_text', unicode), ('xml', unicode),
                 ('text', unicode), ('ip_address', unicode), ('slug', unicode),
