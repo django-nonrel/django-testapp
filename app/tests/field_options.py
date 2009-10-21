@@ -30,9 +30,11 @@ class FieldOptionsTest(TestCase):
         self.assertTrue(gae_entity is not None)
         self.assertEquals(gae_entity.key().name(), u'app-engine@scholardocs.com')
         
-        # check if default values are set correct on the db level
+        # check if default values are set correct on the db level, primary_key field
+        # is not stored at the db level
         for field in FieldsWithOptionsModel._meta.local_fields:
-            if field.default and field.default != NOT_PROVIDED:
+            if field.default and field.default != NOT_PROVIDED and not \
+                    field.primary_key:
                 self.assertEquals(gae_entity[field.column], field.default)
             elif field.column == 'time':
                 self.assertEquals(gae_entity[field.column], datetime.datetime(
