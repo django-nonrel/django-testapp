@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.5
 from common.djangoappengine.aecmd import setup_env
 setup_env()
 
