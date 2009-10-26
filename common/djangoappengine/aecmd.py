@@ -52,8 +52,7 @@ def setup_env():
             # Package can be under 'lib/<pkg>/<pkg>/' or 'lib/<pkg>/lib/<pkg>/'
             detect = (os.path.join(path, dir), os.path.join(path, 'lib', dir))
             for path in detect:
-                if os.path.isdir(path) and \
-                        not os.path.isdir(os.path.join(path, 'django')):
+                if os.path.isdir(path) and not dir == 'django':
                     EXTRA_PATHS.append(os.path.dirname(path))
                     break
         sys.path = EXTRA_PATHS + sys.path
