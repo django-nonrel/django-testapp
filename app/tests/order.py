@@ -1,5 +1,5 @@
+from ..models import FieldsWithOptionsModel, OrderedModel
 from djangotoolbox.test import TestCase
-from app.models import OrderedModel
 
 class OrderTest(TestCase):
     def create_ordered_model_items(self):
