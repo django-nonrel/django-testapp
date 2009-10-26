@@ -1,15 +1,5 @@
-from app.models import FieldsWithOptionsModel
-from django.db import models
 from djangotoolbox.test import TestCase
-
-class FilterTest(TestCase):
-    pass
-
-class OrderedModel(models.Model):
-    priority = models.IntegerField()
-
-    class Meta:
-        ordering = ('-priority',)
+from app.models import OrderedModel
 
 class OrderTest(TestCase):
     def create_ordered_model_items(self):

@@ -20,7 +20,7 @@ class Ptr(models.Model):
     title = models.CharField(_('Title'), max_length=200)
 
 class FieldsWithoutOptionsModel(models.Model):
-    datetime = models.DateTimeField()
+    datetime = models.DateTimeField(db_column="birthday")
     date = models.DateField()
     time = models.TimeField()
     floating_point = models.FloatField()
@@ -74,3 +74,9 @@ class FieldsWithOptionsModel(models.Model):
 #    one_to_one = OneToOneField()
 #    decimal = DecimalField()
 #    image = ImageField()
+
+class OrderedModel(models.Model):
+    priority = models.IntegerField()
+
+    class Meta:
+        ordering = ('-priority',)

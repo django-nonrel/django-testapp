@@ -10,7 +10,7 @@ from google.appengine.api import users
 import datetime
 
 class FieldOptionsTest(TestCase):
-    def testOptions(self):
+    def test_options(self):
         entity = FieldsWithOptionsModel()
         # try to save the entity with non-nullable field time set to None, should
         # raise an exception
