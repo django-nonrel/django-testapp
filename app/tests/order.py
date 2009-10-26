@@ -1,4 +1,4 @@
-from app.models import FieldsWithOptionsModel
+from ..models import FieldsWithOptionsModel
 from django.db import models
 from djangotoolbox.test import TestCase
 
