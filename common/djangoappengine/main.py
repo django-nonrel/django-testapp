@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
 import os, sys
 
-# Add current folder to sys.path, so we can import aecmd.
+# XXX: GAE's threading.local doesn't work correctly with subclassing
+try:
+    import threading
+    del threading.local
+except:
+    pass
+
+# Add parent folder to sys.path, so we can import aecmd.
 # App Engine causes main.py to be reloaded if an exception gets raised
-# on the first request of a main.py instance, so don't add current_dir multiple
+# on the first request of a main.py instance, so don't add parent_dir multiple
 # times.
-current_dir = os.path.abspath(os.path.dirname(__file__))
-if current_dir not in sys.path:
-    sys.path = [current_dir] + sys.path
+parent_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+if parent_dir not in sys.path:
+    sys.path = [parent_dir] + sys.path
 
 # Remove the standard version of Django
 for k in [k for k in sys.modules if k.startswith('django')]:
     del sys.modules[k]
 
-from . import aecmd
+from djangoappengine import aecmd
 aecmd.setup_project()
 aecmd.setup_logging()
 
