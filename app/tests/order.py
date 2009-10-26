@@ -41,3 +41,5 @@ class OrderTest(TestCase):
         self.assertEquals([item.priority
                            for item in OrderedModel.objects.filter(pk__in=pks).order_by()],
                           priorities)
+
+    # TODO: test multiple orders
