@@ -99,14 +99,21 @@ class FilterTest(TestCase):
                           ['rinnengan@sage.de'])
 
     def test_is_null(self):
-        pass
+        self.assertEquals(FieldsWithOptionsModel.objects.filter(
+            floating_point__isnull=True).count(), 0)
+
+        FieldsWithOptionsModel(integer=5.4, email='shinra.tensai@sixpaths.com',
+            time=datetime.datetime.now().time()).save()
+
+        self.assertEquals(FieldsWithOptionsModel.objects.filter(
+            floating_point__isnull=True).count(), 1)
+
 
     def test_exclude(self):
         self.assertEquals([entity.email for entity in \
                             FieldsWithOptionsModel.objects.all().exclude(
                             floating_point__lt=9.1).order_by('floating_point')],
-                            ['rasengan@naruto.com', 'sharingan@uchias.com',
-                            'app-engine@scholardocs.com', ])
+                            ['rinnengan@sage.de', ])
 
     def test_multi_filter(self):
         # additionally tests count :)
