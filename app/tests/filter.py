@@ -1,6 +1,7 @@
 from app.models import FieldsWithOptionsModel
 import datetime
 from django.test import TestCase
+from django.db.models import Q
 from google.appengine.api.datastore_errors import BadArgumentError, BadFilterError
 
 class FilterTest(TestCase):
@@ -115,7 +116,7 @@ class FilterTest(TestCase):
                             floating_point__lt=9.1).order_by('floating_point')],
                             ['rinnengan@sage.de', ])
 
-    def test_multi_filter(self):
+    def test_chained_filter(self):
         # additionally tests count :)
         self.assertEquals(FieldsWithOptionsModel.objects.filter(
                           floating_point__lt=5.3).filter(floating_point__gt=2.6).
@@ -163,11 +164,44 @@ class FilterTest(TestCase):
         self.assertRaises(BadArgumentError, FieldsWithOptionsModel.objects.all().exclude(
                             floating_point__lt=9.1).order_by('email').get)
 
-        # TODO: Add slice tests
-        # TODO: Add tests with Q objects
-        # TODO: Write isnull test
-        # TODO: Check all possible exceptions
+        # test exception on inequality filter. TODO: support them for appengine
+        # via <>
+        self.assertRaises(TypeError, FieldsWithOptionsModel.objects.exclude(
+                            floating_point=9.1).order_by('floating_point').get)
 
+        # TODO: Maybe check for all possible exceptions
+        # TODO: test pk= and related objects filters like Entry.objects.filter(blog=b)
+
+    def test_slicing(self):
+        # test slicing on filter with primary_key
+        self.assertEquals([entity.email for entity in \
+                          FieldsWithOptionsModel.objects.filter(
+                          email__lte='rinnengan@sage.de').order_by('email')][:2],
+                          ['app-engine@scholardocs.com', 'rasengan@naruto.com', ])
+
+        self.assertEquals([entity.email for entity in \
+                          FieldsWithOptionsModel.objects.filter(
+                          email__lte='rinnengan@sage.de').order_by('email')][1:2],
+                          ['rasengan@naruto.com', ])
+
+        self.assertEquals([entity.email for entity in \
+                          FieldsWithOptionsModel.objects.all().order_by(
+                            'email')][::2],
+                          ['app-engine@scholardocs.com', 'rinnengan@sage.de',])
+
+    def test_Q_objects(self):
+        self.assertEquals([entity.email for entity in \
+                          FieldsWithOptionsModel.objects.filter(
+                            Q(email__lte='rinnengan@sage.de')).order_by('email')][:2],
+                          ['app-engine@scholardocs.com', 'rasengan@naruto.com', ])
+
+        self.assertEquals([entity.integer for entity in \
+                          FieldsWithOptionsModel.objects.exclude(Q(integer__lt=5) |
+                            Q(integer__gte=9)).order_by('integer')],
+                            [5, ])
+            
+        self.assertRaises(TypeError, FieldsWithOptionsModel.objects.filter(
+            Q(floating_point=9.1), Q(integer=9) | Q(integer=2)))
 
     def test_pk_in(self):
         # pk_in is tested in order.py
