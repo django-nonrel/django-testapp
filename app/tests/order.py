@@ -36,6 +36,17 @@ class OrderTest(TestCase):
                            for item in OrderedModel.objects.filter(pk__in=pks)],
                           sorted(priorities, reverse=True))
 
+        # test with id__in
+        self.assertEquals([item.priority
+                           for item in OrderedModel.objects.filter(id__in=pks)],
+                          sorted(priorities, reverse=True))
+
+        # test reverse
+        self.assertEquals([item.priority
+                           for item in OrderedModel.objects.filter(
+                           pk__in=pks).reverse()], sorted(priorities,
+                           reverse=False))
+
     def test_remove_default_order_with_pk_filter(self):
         pks, priorities = self.create_ordered_model_items()
         self.assertEquals([item.priority

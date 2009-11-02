@@ -171,6 +171,7 @@ class FilterTest(TestCase):
 
         # TODO: Maybe check for all possible exceptions
         # TODO: test pk= and related objects filters like Entry.objects.filter(blog=b)
+        # TODO: Maybe restructor tests
 
     def test_slicing(self):
         # test slicing on filter with primary_key

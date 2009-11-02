@@ -3,7 +3,10 @@ import datetime
 from django.test import TestCase
 from google.appengine.api.datastore_errors import BadArgumentError, BadFilterError
 
-class FilterTest(TestCase):
+
+# TODO: add lookup type RANGE
+
+class NonReturnSetsTest(TestCase):
     floats = [5.3, 2.6, 9.1, 1.58]
     emails = ['app-engine@scholardocs.com', 'sharingan@uchias.com',
         'rinnengan@sage.de', 'rasengan@naruto.com']
