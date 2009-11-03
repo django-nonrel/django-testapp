@@ -1,4 +1,4 @@
-from djangotoolbox.settings_pre import *
+from djangoappengine.settings_pre import *
 
 SECRET_KEY = '=r-$b*8hglm+858&9t043hlm6-&6-3d3vfc4((7yd0dbrakhvi'
 
@@ -10,4 +10,4 @@ INSTALLED_APPS = (
     'app',
 )
 
-from djangotoolbox.settings_post import *
+from djangoappengine.settings_post import *
