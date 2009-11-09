@@ -182,15 +182,14 @@ class FilterTest(TestCase):
         self.assertRaises(BadArgumentError, FieldsWithOptionsModel.objects.all().exclude(
                             floating_point__lt=9.1).order_by('email').get)
 
-        # test exception on inequality filter. TODO: support them for appengine
-        # via <>
+        # test exception on inequality filter.
+        # TODO: support them for appengine via <>
         self.assertRaises(TypeError, FieldsWithOptionsModel.objects.exclude(
                             floating_point=9.1).order_by('floating_point').get)
 
         # TODO: Maybe check for all possible exceptions
 
         # TODO: test related objects filters like Entry.objects.filter(blog=b)
-        # TODO: Maybe restructor tests
 
     def test_slicing(self):
         # test slicing on filter with primary_key
@@ -229,5 +228,9 @@ class FilterTest(TestCase):
             Q(floating_point=9.1), Q(integer=9) | Q(integer=2)))
 
     def test_pk_in(self):
-        # pk_in is tested in order.py
-        pass
+        # test pk__in with field name email
+        self.assertEquals([entity.email for entity in
+                            FieldsWithOptionsModel.objects.filter(
+                            email__in=['app-engine@scholardocs.com',
+                            'rasengan@naruto.com'])], ['app-engine@scholardocs.com',
+                            'rasengan@naruto.com'])

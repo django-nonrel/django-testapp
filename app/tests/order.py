@@ -1,4 +1,4 @@
-from ..models import FieldsWithOptionsModel, OrderedModel
+from ..models import OrderedModel
 from djangotoolbox.test import TestCase
 
 class OrderTest(TestCase):

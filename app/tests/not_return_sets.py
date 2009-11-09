@@ -16,10 +16,6 @@ class NonReturnSetsTest(TestCase):
                                            time=datetime.datetime.now().time())
             model.save()
 
-    def test_deletion(self):
-        # TODO: test deletion from query and on instance
-        pass
-
     def test_get(self):
         self.assertEquals(FieldsWithOptionsModel.objects.get(
                                                 email='itachi@uchia.com')
@@ -53,4 +49,12 @@ class NonReturnSetsTest(TestCase):
     def test_exists(self):
         self.assertEquals(True, FieldsWithOptionsModel.objects.exists())
 
+    def test_deletion(self):
+        self.assertEquals(FieldsWithOptionsModel.objects.count(), 5)
 
+        FieldsWithOptionsModel.objects.get(email='itachi@uchia.com').delete()
+        self.assertEquals(FieldsWithOptionsModel.objects.count(), 4)
+
+        FieldsWithOptionsModel.objects.filter(email__in=['sharingan@uchias.com',
+            'itachi@uchia.com', 'rasengan@naruto.com', ]).delete()
+        self.assertEquals(FieldsWithOptionsModel.objects.count(), 2)
