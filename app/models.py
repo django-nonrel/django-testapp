@@ -22,6 +22,8 @@ class FieldsWithoutOptionsModel(models.Model):
     small_integer = models.SmallIntegerField()
     positiv_integer = models.PositiveIntegerField()
     positiv_small_integer = models.PositiveSmallIntegerField()
+#    foreign_key = models.ForeignKey('FieldsWithOptionsModel')
+#    foreign_key = models.ForeignKey('OrderedModel')
 #    one_to_one = models.OneToOneField()
 #    decimal = models.DecimalField() # can be None
 #    image = models.ImageField()
@@ -53,6 +55,7 @@ class FieldsWithOptionsModel(models.Model):
     small_integer = models.SmallIntegerField(default=-5)
     positiv_integer = models.PositiveIntegerField(default=80)
     positiv_small_integer = models.PositiveSmallIntegerField(default=3, null=True)
+    foreign_key = models.ForeignKey('OrderedModel', null=True, related_name='keys')
 #    one_to_one = OneToOneField()
 #    decimal = DecimalField()
 #    image = ImageField()

@@ -52,3 +52,6 @@ class FieldDBConvertionTest(TestCase):
                 ('positiv_small_integer', (int, long))]:
             self.assertTrue(type(getattr(entity, name)) in (isinstance(
                 expected_type, (list, tuple)) and expected_type or (expected_type, )))
+
+
+# TODO: Add field convertions for ForeignKeys?

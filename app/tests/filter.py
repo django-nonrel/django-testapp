@@ -1,4 +1,4 @@
-from app.models import FieldsWithOptionsModel
+from app.models import FieldsWithOptionsModel, OrderedModel
 import datetime
 from django.test import TestCase
 from django.db.models import Q
@@ -10,11 +10,15 @@ class FilterTest(TestCase):
         'rinnengan@sage.de', 'rasengan@naruto.com']
 
     def setUp(self):
-        for index, (float, email) in enumerate(zip(FilterTest.floats, FilterTest.emails)):
+        for index, (float, email) in enumerate(zip(FilterTest.floats,
+                FilterTest.emails)):
             self.last_save_time = datetime.datetime.now().time()
+            ordered_instance = OrderedModel(priority=index, pk=index + 1)
+            ordered_instance.save()
             model = FieldsWithOptionsModel(floating_point=float,
                                            integer=int(float), email=email,
-                                           time=self.last_save_time)
+                                           time=self.last_save_time,
+                                           foreign_key=ordered_instance)
             model.save()
 
     def test_gt(self):
@@ -36,12 +40,18 @@ class FilterTest(TestCase):
                           order_by('email')], ['rasengan@naruto.com',
                           'rinnengan@sage.de', 'sharingan@uchias.com', ])
 
-        # filter on datetime
-        self.assertEquals([entity.email for entity in \
+        # test ForeignKeys with id
+        self.assertEquals(sorted([entity.email for entity in \
                             FieldsWithOptionsModel.objects.filter(
-                            time__lt=self.last_save_time).order_by('time')],
-                            ['app-engine@scholardocs.com', 'sharingan@uchias.com',
-                            'rinnengan@sage.de',])
+                            foreign_key__gt=2)]),
+                            ['rasengan@naruto.com', 'rinnengan@sage.de', ])
+
+        # and with instance
+        ordered_instance = OrderedModel.objects.get(priority=1)
+        self.assertEquals(sorted([entity.email for entity in \
+                            FieldsWithOptionsModel.objects.filter(
+                            foreign_key__gt=ordered_instance)]),
+                            ['rasengan@naruto.com', 'rinnengan@sage.de', ])
 
 
     def test_lt(self):
@@ -61,6 +71,27 @@ class FilterTest(TestCase):
         self.assertEquals([entity.email for entity in \
                           FieldsWithOptionsModel.objects.filter(email__lt='as').
                           order_by('email')], ['app-engine@scholardocs.com', ])
+
+         # filter on datetime
+        self.assertEquals([entity.email for entity in \
+                            FieldsWithOptionsModel.objects.filter(
+                            time__lt=self.last_save_time).order_by('time')],
+                            ['app-engine@scholardocs.com', 'sharingan@uchias.com',
+                            'rinnengan@sage.de',])
+
+        # test ForeignKeys with id
+        self.assertEquals(sorted([entity.email for entity in \
+                            FieldsWithOptionsModel.objects.filter(
+                            foreign_key__lt=3)]),
+                            ['app-engine@scholardocs.com', 'sharingan@uchias.com'])
+
+        # and with instance
+        ordered_instance = OrderedModel.objects.get(priority=2)
+        self.assertEquals(sorted([entity.email for entity in \
+                            FieldsWithOptionsModel.objects.filter(
+                            foreign_key__lt=ordered_instance)]),
+                            ['app-engine@scholardocs.com', 'sharingan@uchias.com'])
+
 
     def test_gte(self):
         # test gte on float
@@ -134,6 +165,14 @@ class FilterTest(TestCase):
                             floating_point__lt=9.1).order_by('floating_point')],
                             ['rinnengan@sage.de', ])
 
+        # test exclude with foreignKey
+        ordered_instance = OrderedModel.objects.get(priority=1)
+        self.assertEquals(sorted([entity.email for entity in \
+                            FieldsWithOptionsModel.objects.all().exclude(
+                            foreign_key__gt=ordered_instance)]),
+                            ['app-engine@scholardocs.com', 'sharingan@uchias.com',])
+
+
     def test_chained_filter(self):
         # additionally tests count :)
         self.assertEquals(FieldsWithOptionsModel.objects.filter(
@@ -187,9 +226,7 @@ class FilterTest(TestCase):
         self.assertRaises(TypeError, FieldsWithOptionsModel.objects.exclude(
                             floating_point=9.1).order_by('floating_point').get)
 
-        # TODO: Maybe check for all possible exceptions
-
-        # TODO: test related objects filters like Entry.objects.filter(blog=b)
+        # TODO: Maybe check all possible exceptions
 
     def test_slicing(self):
         # test slicing on filter with primary_key
