@@ -1,26 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-class FlatPage(models.Model):
-    title = models.CharField(_('Title'), max_length=10, db_index=True)
-    content = models.TextField(_('Content'))
-    active = models.BooleanField(default=True)
-    integer_list = models.CommaSeparatedIntegerField(max_length=20,
-        default="10, 20, 5, 4")
-    email = models.EmailField()
-    velocity = models.FloatField()
-    age = models.PositiveIntegerField()
-
-#class FlatterPage(FlatPage):
-#    url = models.CharField(_('url'), max_length=200)
-#    content = models.TextField(_('content'), blank=True)
-
-class Ptr(models.Model):
-    page = models.ForeignKey(FlatPage, related_name='ptrs')
-    title = models.CharField(_('Title'), max_length=200)
-
 class FieldsWithoutOptionsModel(models.Model):
-    datetime = models.DateTimeField(db_column="birthday")
+    datetime = models.DateTimeField()
     date = models.DateField()
     time = models.TimeField()
     floating_point = models.FloatField()
@@ -40,6 +22,8 @@ class FieldsWithoutOptionsModel(models.Model):
     small_integer = models.SmallIntegerField()
     positiv_integer = models.PositiveIntegerField()
     positiv_small_integer = models.PositiveSmallIntegerField()
+#    foreign_key = models.ForeignKey('FieldsWithOptionsModel')
+#    foreign_key = models.ForeignKey('OrderedModel')
 #    one_to_one = models.OneToOneField()
 #    decimal = models.DecimalField() # can be None
 #    image = models.ImageField()
@@ -51,7 +35,7 @@ class FieldsWithOptionsModel(models.Model):
     # instead a new entity will be putted into the datastore. The old one will
     # not be deleted and all references pointing to the old entitiy will not
     # point to the new one either
-    datetime = models.DateTimeField(auto_now=True)
+    datetime = models.DateTimeField(auto_now=True, db_column="birthday")
     date = models.DateField(auto_now_add=True)
     time = models.TimeField()
     floating_point = models.FloatField(null=True)
@@ -71,6 +55,7 @@ class FieldsWithOptionsModel(models.Model):
     small_integer = models.SmallIntegerField(default=-5)
     positiv_integer = models.PositiveIntegerField(default=80)
     positiv_small_integer = models.PositiveSmallIntegerField(default=3, null=True)
+    foreign_key = models.ForeignKey('OrderedModel', null=True, related_name='keys')
 #    one_to_one = OneToOneField()
 #    decimal = DecimalField()
 #    image = ImageField()
