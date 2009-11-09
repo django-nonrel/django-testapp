@@ -50,4 +50,7 @@ class NonReturnSetsTest(TestCase):
         self.assertEquals('itachi@uchia.com', FieldsWithOptionsModel.objects
             .latest('time').email)
 
+    def test_exists(self):
+        self.assertEquals(True, FieldsWithOptionsModel.objects.exists())
+
 
