@@ -1,11 +1,11 @@
 """
-App Engine backend for Django. Based on app-engine-patch backend.
+App Engine backend for Django.
 """
 
 from .creation import DatabaseCreation
 from ..utils import appid, have_appserver, on_production_server
 from django.db.backends import BaseDatabaseFeatures, BaseDatabaseOperations, \
-    BaseDatabaseWrapper, BaseDatabaseValidation, BaseDatabaseIntrospection
+    BaseDatabaseWrapper, BaseDatabaseClient, BaseDatabaseValidation, BaseDatabaseIntrospection
 from google.appengine.ext.db import Error as GAEError
 import logging, os
 
@@ -91,6 +91,9 @@ class DatabaseOperations(BaseDatabaseOperations):
 #    def value_to_db_decimal(self, value, max_digits, decimal_places):
 #        return 
 
+class DatabaseClient(BaseDatabaseClient):
+    pass
+
 class DatabaseValidation(BaseDatabaseValidation):
     pass
 
@@ -111,20 +114,19 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         super(DatabaseWrapper, self).__init__(*args, ** kwds)
         self.features = DatabaseFeatures()
         self.ops = DatabaseOperations()
+        self.client = DatabaseClient(self)
         self.creation = DatabaseCreation(self)
-        self.validation = DatabaseValidation()
+        self.validation = DatabaseValidation(self)
         self.introspection = DatabaseIntrospection(self)
         options = self.settings_dict['DATABASE_OPTIONS']
-        self.use_test_datastore = options.get("use_test_datastore", False)
-        self.test_datastore_inmemory = options.get("test_datastore_inmemory", True)
-        self.use_remote = options.get("use_remote", False)
+        self.use_test_datastore = options.get('use_test_datastore', False)
+        self.test_datastore_inmemory = options.get('test_datastore_inmemory', True)
+        self.use_remote = options.get('use_remote', False)
         if on_production_server:
             self.use_remote = False
-        self.remote_app_id = options.get("remote_id", appid)
-        self.remote_host = options.get(
-                                       "remote_host", "%s.appspot.com" % self.remote_app_id
-                                       )
-        self.remote_url = options.get("remote_url", '/remote_api')
+        self.remote_app_id = options.get('remote_id', appid)
+        self.remote_host = options.get('remote_host', '%s.appspot.com' % self.remote_app_id)
+        self.remote_url = options.get('remote_url', '/remote_api')
         self._setup_stubs()
 
     def _get_paths(self):
@@ -149,7 +151,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
 
     def setup_remote(self):
         self.use_remote = True
-        logging.info("Setting up remote_api for '%s' at http://%s%s" %
+        logging.info('Setting up remote_api for "%s" at http://%s%s' %
                      (self.remote_app_id, self.remote_host, self.remote_url)
                      )
         from google.appengine.ext.remote_api import remote_api_stub
@@ -157,7 +159,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         remote_api_stub.ConfigureRemoteDatastore(self.remote_app_id,
             self.remote_url, auth_func, self.remote_host,
             rpc_server_factory=rpc_server_factory)
-        logging.info("Now using the datastore at '%s' at http://%s%s" %
+        logging.info('Now using the datastore at "%s" at http://%s%s' %
                      (self.remote_app_id, self.remote_host, self.remote_url))
 
     def flush(self):
@@ -165,13 +167,13 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         if self.use_remote:
             import random, string
             code = ''.join([random.choice(string.ascii_letters) for x in range(4)])
-            print "\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-            print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+            print '\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+            print '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
             print "Warning! You're about to delete the *production* datastore!"
-            print "Only models defined in your INSTALLED_APPS can be removed!"
-            print "If you want to clear the whole datastore you have to use the " \
-                  "datastore viewer in the dashboard. Also, in order to delete all "\
-                  "unneeded indexes you have to run appcfg.py vacuum_indexes."
+            print 'Only models defined in your INSTALLED_APPS can be removed!'
+            print 'If you want to clear the whole datastore you have to use the ' \
+                  'datastore viewer in the dashboard. Also, in order to delete all '\
+                  'unneeded indexes you have to run appcfg.py vacuum_indexes.'
             print 'In order to proceed you have to enter the following code:'
             print code
             response = raw_input('Repeat: ')
@@ -187,8 +189,8 @@ class DatabaseWrapper(BaseDatabaseWrapper):
                             break
                         ds.Delete(data)
                 print "Datastore flushed! Please check your dashboard's " \
-                      "datastore viewer for any remaining entities and remove " \
-                      "all unneeded indexes with manage.py vacuum_indexes."
+                      'datastore viewer for any remaining entities and remove ' \
+                      'all unneeded indexes with manage.py vacuum_indexes.'
             else:
                 print 'Aborting'
                 exit()

@@ -64,7 +64,20 @@ def setup_env():
     setup_project()
     setup_logging()
 
+def setup_threading():
+    # XXX: GAE's threading.local doesn't work correctly with subclassing
+    try:
+        from django.utils._threading_local import local
+        import threading
+        threading.local = local
+    except ImportError:
+        pass
+
 def setup_logging():
+    # Fix Python 2.6 logging module
+    logging.logMultiprocessing = 0
+
+    # Enable logging
     from django.conf import settings
     if settings.DEBUG:
         logging.getLogger().setLevel(logging.DEBUG)
