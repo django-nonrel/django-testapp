@@ -12,13 +12,13 @@ ADMINS = ()
 
 DATABASES = {
     'default': {
-        'DATABASE_ENGINE': 'djangoappengine.db',
-        'DATABASE_NAME': '',
-        'DATABASE_USER': '',
-        'DATABASE_PASSWORD': '',
-        'DATABASE_HOST': '',
-        'DATABASE_PORT': '',
-        'DATABASE_SUPPORTS_TRANSACTIONS': False,
+        'ENGINE': 'djangoappengine.db',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+        'SUPPORTS_TRANSACTIONS': False,
     },
 }
 

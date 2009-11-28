@@ -32,7 +32,7 @@ def get_datastore_paths(settings_dict):
       (datastore_path, history_path)
     """
     from google.appengine.tools import dev_appserver_main
-    options = settings_dict['DATABASE_OPTIONS']
+    options = settings_dict['OPTIONS']
     datastore_path = options.get('datastore_path',
                                  dev_appserver_main.DEFAULT_ARGS['datastore_path'].replace(
                                  'dev_appserver', 'django_%s' % appid))
@@ -118,7 +118,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         self.creation = DatabaseCreation(self)
         self.validation = DatabaseValidation(self)
         self.introspection = DatabaseIntrospection(self)
-        options = self.settings_dict['DATABASE_OPTIONS']
+        options = self.settings_dict['OPTIONS']
         self.use_test_datastore = options.get('use_test_datastore', False)
         self.test_datastore_inmemory = options.get('test_datastore_inmemory', True)
         self.use_remote = options.get('use_remote', False)
