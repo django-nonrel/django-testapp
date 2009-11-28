@@ -1,13 +1,6 @@
 # -*- coding: utf-8 -*-
 import os, sys
 
-# XXX: GAE's threading.local doesn't work correctly with subclassing
-try:
-    import threading
-    del threading.local
-except:
-    pass
-
 # Add parent folder to sys.path, so we can import aecmd.
 # App Engine causes main.py to be reloaded if an exception gets raised
 # on the first request of a main.py instance, so don't add parent_dir multiple
@@ -21,6 +14,7 @@ for k in [k for k in sys.modules if k.startswith('django')]:
     del sys.modules[k]
 
 from djangoappengine import aecmd
+aecmd.setup_threading()
 aecmd.setup_project()
 aecmd.setup_logging()
 
