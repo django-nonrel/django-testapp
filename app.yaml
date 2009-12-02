@@ -10,8 +10,5 @@ handlers:
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
 
-- url: /media
-  static_dir: _generated_media
-
 - url: /.*
   script: common/djangoappengine/main.py
