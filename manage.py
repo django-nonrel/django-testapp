@@ -1,5 +1,7 @@
-#!/usr/bin/env python2.5
-from common.djangoappengine.aecmd import setup_env
+#!/usr/bin/env python
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'common-apps'))
+from djangoappengine.boot import setup_env
 setup_env()
 
 from django.core.management import execute_manager
