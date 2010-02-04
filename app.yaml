@@ -11,4 +11,4 @@ handlers:
   login: admin
 
 - url: /.*
-  script: common-apps/djangoappengine/main.py
+  script: common-apps/djangoappengine/main/main.py
