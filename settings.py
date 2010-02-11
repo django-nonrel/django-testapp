@@ -9,5 +9,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
 )
 
+ADMIN_MEDIA_PREFIX = '/media/admin/'
+
 import os
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
