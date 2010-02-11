@@ -14,4 +14,4 @@ handlers:
   static_dir: common-apps/django/contrib/admin/media
 
 - url: /.*
-  script: common-apps/djangoappengine/main.py
+  script: common-apps/djangoappengine/main/main.py
