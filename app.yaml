@@ -11,7 +11,7 @@ handlers:
   login: admin
 
 - url: /_ah/queue/deferred
-  script: $PYTHON_LIB/google/appengine/ext/deferred/handler.py
+  script: common-apps/djangoappengine/deferred/handler.py
   login: admin
 
 - url: /media/admin
