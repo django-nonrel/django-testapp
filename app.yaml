@@ -15,7 +15,7 @@ handlers:
   login: admin
 
 - url: /media/admin
-  static_dir: django/contrib/admin/media
+  static_dir: django/contrib/admin/media/
 
 - url: /.*
   script: djangoappengine/main/main.py
