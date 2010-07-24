@@ -20,6 +20,8 @@ INSTALLED_APPS = (
 if has_djangoappengine:
     INSTALLED_APPS = ('djangoappengine',) + INSTALLED_APPS
 
+TEST_RUNNER = 'djangotoolbox.test.CapturingTestSuiteRunner'
+
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
