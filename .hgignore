@@ -13,6 +13,10 @@ desktop.ini
 settings_overrides.py
 nbproject
 django
+djangoappengine
 django_mongodb_engine
 djangotoolbox
+dbindexer
+decoupled
 mediagenerator
+protopy.py
