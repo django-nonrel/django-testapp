@@ -6,6 +6,9 @@ api_version: 1
 builtins:
 - remote_api: on
 
+inbound_services:
+- warmup
+
 handlers:
 - url: /_ah/queue/deferred
   script: djangoappengine/deferred/handler.py
