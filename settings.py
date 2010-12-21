@@ -12,6 +12,7 @@ INSTALLED_APPS = (
 #    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.staticfiles',
     'djangotoolbox',
 
     # djangoappengine should come last, so it can override a few manage.py commands
@@ -23,12 +24,6 @@ INSTALLED_APPS = (
 TEST_RUNNER = 'djangotoolbox.test.CapturingTestSuiteRunner'
 
 ADMIN_MEDIA_PREFIX = '/media/admin/'
-STATICFILES_ROOT = os.path.join(os.path.dirname(__file__), '_generated_media')
-STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'static'),
-)
-STATICFILES_URL = '/media/'
-MEDIA_URL = '/files/'
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
