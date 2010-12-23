@@ -9,10 +9,11 @@ SECRET_KEY = '=r-$b*8hglm+858&9t043hlm6-&6-3d3vfc4((7yd0dbrakhvi'
 
 INSTALLED_APPS = (
 #    'django.contrib.admin',
-#    'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'djangotoolbox',
 
     # djangoappengine should come last, so it can override a few manage.py commands
@@ -28,7 +29,7 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
 
-SITE_ID = 1
+SITE_ID = 29
 
 # Activate django-dbindexer if available
 try:
@@ -36,5 +37,6 @@ try:
     DATABASES['native'] = DATABASES['default']
     DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
     INSTALLED_APPS += ('dbindexer',)
+    DBINDEXER_SITECONF = 'dbindexes'
 except ImportError:
     pass
