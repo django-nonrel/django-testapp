@@ -20,6 +20,18 @@ INSTALLED_APPS = (
     'djangoappengine',
 )
 
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.core.context_processors.media',
+)
+
 # This test runner captures stdout and associates tracebacks with their
 # corresponding output. Helps a lot with print-debugging.
 TEST_RUNNER = 'djangotoolbox.test.CapturingTestSuiteRunner'
@@ -38,5 +50,7 @@ try:
     DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
     INSTALLED_APPS += ('dbindexer',)
     DBINDEXER_SITECONF = 'dbindexes'
+    MIDDLEWARE_CLASSES = ('dbindexer.middleware.DBIndexerMiddleware',) + \
+                         MIDDLEWARE_CLASSES
 except ImportError:
     pass
