@@ -14,6 +14,9 @@ handlers:
   script: djangoappengine/deferred/handler.py
   login: admin
 
+- url: /_ah/stats/.*
+  script: djangoappengine/appstats/ui.py
+
 - url: /media/admin
   static_dir: django/contrib/admin/media
   expiration: '0'
