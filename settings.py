@@ -12,7 +12,6 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'djangotoolbox',
 
     # djangoappengine should come last, so it can override a few manage.py commands
@@ -39,8 +38,6 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
-
-SITE_ID = 29
 
 # Activate django-dbindexer if available
 try:
