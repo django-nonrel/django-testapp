@@ -12,7 +12,7 @@ import os
 # Activate django-dbindexer for the default database
 DATABASES['native'] = DATABASES['default']
 DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
-DBINDEXER_SITECONF = 'dbindexes'
+AUTOLOAD_SITECONF = 'indexes'
 
 SECRET_KEY = '=r-$b*8hglm+858&9t043hlm6-&6-3d3vfc4((7yd0dbrakhvi'
 
@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.sessions',
     'djangotoolbox',
+    'autoload',
     'dbindexer',
 
     # djangoappengine should come last, so it can override a few manage.py commands
@@ -30,7 +31,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     # This loads the index definitions, so it has to come first
-    'dbindexer.middleware.DBIndexerMiddleware',
+    'autoload.middleware.AutoloadMiddleware',
 
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
