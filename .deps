@@ -9,5 +9,5 @@ django-dbindexer = https://bitbucket.org/wkornewald/django-dbindexer
 django = django/django
 djangoappengine = djangoappengine
 djangotoolbox = djangotoolbox/djangotoolbox
-django-autoload = django-autoload/autoload
+autoload = django-autoload/autoload
 dbindexer = django-dbindexer/dbindexer
