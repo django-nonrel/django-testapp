@@ -5,10 +5,6 @@ from djangoappengine.settings_base import *
 
 import os
 
-# Uncomment this if you're using the high-replication datastore.
-# TODO: Once App Engine fixes the "s~" prefix mess we can remove this.
-#DATABASES['default']['HIGH_REPLICATION'] = True
-
 # Activate django-dbindexer for the default database
 DATABASES['native'] = DATABASES['default']
 DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
