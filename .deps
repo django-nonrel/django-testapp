@@ -4,10 +4,3 @@ djangoappengine = https://bitbucket.org/wkornewald/djangoappengine
 djangotoolbox = https://bitbucket.org/wkornewald/djangotoolbox
 django-autoload = https://bitbucket.org/twanschik/django-autoload
 django-dbindexer = https://bitbucket.org/wkornewald/django-dbindexer
-
-[links]
-django = django/django
-djangoappengine = djangoappengine
-djangotoolbox = djangotoolbox/djangotoolbox
-autoload = django-autoload/autoload
-dbindexer = django-dbindexer/dbindexer
