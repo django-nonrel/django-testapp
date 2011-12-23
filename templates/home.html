@@ -18,28 +18,31 @@ You'll also find <a href="http://djangosnippets.org/">djangosnippets</a> very us
 </p>
 
 <p>
-Most of core Django (including contrib modules) works with nonrelational backends, notable exceptions are:
-</p>
-
-<ul>
-  <li>ManyToMany and Image fields</li>
-  <li>cascade deletes (may be reenabled, but are not currently properly supported)</li>
-  <li>contrib.auth user groups and permissions (use the permission-backend)</li>
-  <li>contrib.flatpages needs a small workaround</li>
-</ul>
-
-<p>
 If you search for reusable apps that work with Django-nonrel here's a list to get you started:
 </p>
 
 <ul>
-  <li><a href="https://github.com/django-nonrel/django-dbindexer">django-dbindexer</a>: Emulates extra database features beyond its native API (filters like: __iexact, __endswith etc., JOINs and aggregates in the future); those features are used by some Django contrib modules (admin, auth)</li>
+  <li><a href="https://github.com/django-nonrel/django-dbindexer">django-dbindexer</a>: Emulates extra database features beyond its native API (filters like __iexact, __endswith and simple JOINs); those features are used by some Django modules (admin, auth)</li>
   <li><a href="https://github.com/django-nonrel/django-permission-backend-nonrel">django-permission-backend-nonrel</a>: Authentication backend that works with non-relation databases</li>
   <li><a href="https://github.com/django-nonrel/nonrel-search">nonrel-search</a>: A simple full-text search engine for App Engine and other non-relational DBs</li>
   <li><a href="http://readthedocs.org/docs/django-nonrel/en/latest/content/django-mediagenerator%20asset%20manager.html">django-mediagenerator</a>: Combines and compresses your JS and CSS files</li>
   <li><a href="http://readthedocs.org/docs/django-nonrel/en/latest/content/django-filetransfers%20-%20File%20upload-download%20abstraction.html">django-filetransfers</a>: Generic API for file uploads/downloads (e.g. via App Engine Blobstore)</li>
   <li><a href="http://readthedocs.org/docs/django-nonrel/en/latest/content/All%20Buttons%20Pressed%20-%20CMS%20&amp;%20blog%20for%20Django-nonrel.html">allbuttonspressed</a>: The simple CMS/blog that powers the original <a href="http://www.allbuttonspressed.com">Django-nonrel website</a></li>
   <li><a href="https://github.com/django-nonrel">...and other nonrel projects...</a></li>
+</ul>
+
+<p>
+Most of core Django (including contrib modules) works with nonrelational backends, notable exceptions are:
+</p>
+
+<ul>
+  <li>cascade deletes (may be reenabled, but are not currently properly supported)</li>
+  <li>JOINs are limited to simple cases</li>
+  <li>Django's transactions API</li>
+  <li>contrib.auth user groups and permissions (use the nonrel permission-backend)</li>
+  <li>to be able to edit users through contrib.admin you need to add djangotoolbox to INSTALLED_APPS</li>
+  <li>contrib.flatpages also needs a small workaround</li>
+  <li>some backends have some additional limitations (ManyToMany and Image fields and a few lookup methods on the Google App Engine)</li>
 </ul>
 
 <p>
