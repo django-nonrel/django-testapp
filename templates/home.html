@@ -18,6 +18,17 @@ You'll also find <a href="http://djangosnippets.org/">djangosnippets</a> very us
 </p>
 
 <p>
+Most of core Django (including contrib modules) works with nonrelational backends, notable exceptions are:
+</p>
+
+<ul>
+  <li>ManyToMany and Image fields</li>
+  <li>cascade deletes (may be reenabled, but are not currently properly supported)</li>
+  <li>contrib.auth user groups and permissions (use the permission-backend)</li>
+  <li>contrib.flatpages needs a small workaround</li>
+</ul>
+
+<p>
 If you search for reusable apps that work with Django-nonrel here's a list to get you started:
 </p>
 
