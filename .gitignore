@@ -1,0 +1,9 @@
+*.pyc
+django
+djangotoolbox
+djangoappengine
+django_mongodb_engine
+dbindexer
+autoload
+mediagenerator
+filetransfers
