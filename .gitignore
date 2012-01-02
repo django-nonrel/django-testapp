@@ -1,4 +1,5 @@
 *.pyc
+.gaedata
 django
 djangotoolbox
 djangoappengine
