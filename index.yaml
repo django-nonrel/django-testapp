@@ -6,6 +6,12 @@ indexes:
   - name: action_time
     direction: desc
 
+- kind: django_admin_log
+  properties:
+  - name: content_type_id
+  - name: idxf_object_id_l_exact
+  - name: action_time
+
 - kind: django_content_type
   properties:
   - name: app_label
