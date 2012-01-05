@@ -18,6 +18,10 @@ You'll also find <a href="http://djangosnippets.org/">djangosnippets</a> very us
 </p>
 
 <p>
+If you have an existing Django project that you'd like to use with a non-relational back-end or would simply like to learn what are the differences between the normal Django and its non-relational version take a look at: <a href="http://readthedocs.org/docs/django-nonrel/en/latest/content/porting.html">
+</p>
+
+<p>
 If you search for reusable apps that work with Django-nonrel here's a list to get you started:
 </p>
 
@@ -29,20 +33,6 @@ If you search for reusable apps that work with Django-nonrel here's a list to ge
   <li><a href="http://readthedocs.org/docs/django-nonrel/en/latest/content/django-filetransfers%20-%20File%20upload-download%20abstraction.html">django-filetransfers</a>: Generic API for file uploads/downloads (e.g. via App Engine Blobstore)</li>
   <li><a href="http://readthedocs.org/docs/django-nonrel/en/latest/content/All%20Buttons%20Pressed%20-%20CMS%20&amp;%20blog%20for%20Django-nonrel.html">allbuttonspressed</a>: The simple CMS/blog that powers the original <a href="http://www.allbuttonspressed.com">Django-nonrel website</a></li>
   <li><a href="https://github.com/django-nonrel">...and other nonrel projects...</a></li>
-</ul>
-
-<p>
-Most of core Django (including contrib modules) works with nonrelational backends, notable exceptions are:
-</p>
-
-<ul>
-  <li>cascade deletes (may be reenabled, but are not currently properly supported)</li>
-  <li>JOINs are limited to simple cases</li>
-  <li>Django's transactions API</li>
-  <li>contrib.auth user groups and permissions (use the nonrel permission-backend)</li>
-  <li>to be able to edit users through contrib.admin you need to add djangotoolbox to INSTALLED_APPS</li>
-  <li>contrib.flatpages also needs a small workaround</li>
-  <li>some backends have some additional limitations (ManyToMany and Image fields and a few lookup methods on the Google App Engine)</li>
 </ul>
 
 <p>
