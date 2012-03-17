@@ -1,0 +1,11 @@
+.DS_Store
+*.pyc
+.gaedata
+
+# ignore dependencies
+autoload
+dbindexer
+django
+djangoappengine
+djangotoolbox
+django_mongodb_engine
