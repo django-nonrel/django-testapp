@@ -6,7 +6,7 @@ pip install --download='./build' --no-install -r requirements.txt
 
 unzip -q build/django-autoload-0.01.zip -d build
 unzip -q build/django-dbindexer-0.3.zip -d build
-unzip -q build/django-nonrel-1.4.zip -d build
+unzip -q build/django-nonrel-1.4.1.zip -d build
 unzip -q build/djangoappengine-1.0.zip -d build
 unzip -q build/djangotoolbox-0.9.2.zip -d build
 
