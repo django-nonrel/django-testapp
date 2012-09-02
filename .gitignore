@@ -1,12 +1,13 @@
-.DS_Store
 *.pyc
 .gaedata
-build/
 
-# ignore dependencies
-autoload
-dbindexer
 django
-djangoappengine
 djangotoolbox
+djangoappengine
 django_mongodb_engine
+dbindexer
+autoload
+mediagenerator
+filetransfers
+
+build
