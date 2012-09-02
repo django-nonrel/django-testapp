@@ -1,6 +1,7 @@
 .DS_Store
 *.pyc
 .gaedata
+build/
 
 # ignore dependencies
 autoload
