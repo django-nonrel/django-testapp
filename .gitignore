@@ -10,5 +10,6 @@ dbindexer
 autoload
 mediagenerator
 filetransfers
+mapreduce
 
 build
